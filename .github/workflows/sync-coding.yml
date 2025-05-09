@@ -18,8 +18,8 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git pull coding master --rebase  # 拉取 Coding 代码
-          git push origin master  # 推送到 GitHub
+          git push origin main  # 推送到 GitHub
         env:
           GIT_ASKPASS: "echo"
-          GIT_USERNAME: "oHVuydRBLY"
+          GIT_USERNAME: "1016138249@qq.com"
           GIT_PASSWORD: "${{ secrets.CODING_ACCESS_TOKEN }}"
