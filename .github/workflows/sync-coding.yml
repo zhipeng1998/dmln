@@ -1,0 +1,25 @@
+name: Sync from Coding
+on:
+  schedule:
+    - cron: "0 * * * *"  # 每小时自动同步一次（可选）
+  workflow_dispatch:  # 支持手动触发
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整 Git 历史
+
+      - name: Sync from Coding
+        run: |
+          git remote add coding ${{ secrets.CODING_REPO_URL }}
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git pull coding main --rebase  # 拉取 Coding 代码
+          git push origin main  # 推送到 GitHub
+        env:
+          GIT_ASKPASS: "echo"
+          GIT_USERNAME: "your-coding-username"
+          GIT_PASSWORD: "${{ secrets.CODING_ACCESS_TOKEN }}"
